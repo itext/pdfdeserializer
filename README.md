@@ -4,11 +4,30 @@
 
 pdfDeserializer is a tool that deserializes your PDF syntax into iText objects. It takes a String representation of any of the standard PDF objects:
 
+| Token | Object |
+|:-:|:-:|
+| << ... >> | Dictionary |
+| [ ... ] | Array |
+| /Name | Name |
+| ( abc ) | String (Literal) |
+| < 616263 > | String (Hexadecimal) |
+| 1.0 | Number |
+| 1 0 R | Indirect Reference |
+
+And it will turn that into a usable com.itextpdf.kernel.pdf.PdfObject instance (of the appropriate subclass of course).
+
+
+
+For example:
 ```
 <</Type/Example/Reason (Because)>>
 ```
 
-And it will turn that into a usable com.itextpdf.kernel.pdf.PdfObject instance (of the appropriate subclass of course).
+Would become:
+| Dictionary: | |
+| :-- | :-- |
+| Name{ Type } | Name{ Example } |
+| Name{ Reason } | String{ Because }|
 
 ## Building
 
